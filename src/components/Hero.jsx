@@ -114,11 +114,11 @@ const Hero = () => {
                             transition={{ type: "spring", stiffness: 300, damping: 10 }}
                             style={{
                                 width: '100%',
-                                maxWidth: '400px',
-                                aspectRatio: '3/4',
-                                borderRadius: '24px',
+                                maxWidth: '350px',
+                                aspectRatio: '1/1',
+                                borderRadius: '50%',
                                 overflow: 'hidden',
-                                border: '2px solid rgba(255,255,255,0.1)',
+                                border: '4px solid rgba(255,255,255,0.1)',
                                 boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
                                 background: 'var(--bg-card)'
                             }}
@@ -131,6 +131,7 @@ const Hero = () => {
                                     width: '100%',
                                     height: '100%',
                                     objectFit: 'cover',
+                                    objectPosition: 'top',
                                     display: 'block'
                                 }}
                                 onError={(e) => {
