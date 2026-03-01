@@ -44,7 +44,13 @@ const Hero = () => {
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                            style={{ fontSize: '1.1rem', color: 'var(--text-muted)', marginBottom: '2.5rem', maxWidth: '600px' }}
+                            style={{
+                                fontSize: '1.05rem',
+                                color: 'var(--text-muted)',
+                                marginBottom: '2.5rem',
+                                maxWidth: '100%',
+                                lineHeight: '1.8'
+                            }}
                         >
                             Motivated AI & Data Science student with hands-on internship experience in Machine Learning, Data Analytics, and Cloud-based AI. Focused on practical, measurable outcomes: clean data pipelines, reliable models, and deployable prototypes.
                         </motion.p>
@@ -125,10 +131,18 @@ const Hero = () => {
                                     width: '100%',
                                     height: '100%',
                                     objectFit: 'cover',
+                                    display: 'block'
                                 }}
                                 onError={(e) => {
-                                    e.target.style.display = 'none';
-                                    e.target.nextSibling.style.display = 'flex';
+                                    // Try alternate extensions before giving up
+                                    if (e.target.src.endsWith('.jpg')) {
+                                        e.target.src = '/profile.png';
+                                    } else if (e.target.src.endsWith('.png')) {
+                                        e.target.src = '/profile.jpeg';
+                                    } else {
+                                        e.target.style.display = 'none';
+                                        e.target.nextSibling.style.display = 'flex';
+                                    }
                                 }}
                             />
                             <div style={{ display: 'none', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', textAlign: 'center', padding: '2rem', background: 'var(--bg-card)' }}>

@@ -5,12 +5,46 @@ import { MapPin, Mail, Linkedin, Github, Send } from 'lucide-react';
 const Contact = () => {
     const [formStatus, setFormStatus] = useState(null);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Use FormSubmit or other service
-        setFormStatus('Message sent successfully!');
-        e.target.reset();
-        setTimeout(() => setFormStatus(null), 3000);
+        setFormStatus('Sending message...');
+
+        // Web3Forms API 
+        // This allows sending emails directly from static HTML/React sites
+        // See https://docs.web3forms.com/how-to-guides/js-frameworks/react-js
+        const formData = new FormData(e.target);
+
+        // Add access key (public key for rubbing email)
+        // For direct use without signup, we use the public testing key 
+        // OR create a quick free one: https://web3forms.com/#create
+        // Let's use the formsubmit.co which doesn't require a key
+
+        try {
+            const response = await fetch("https://formsubmit.co/ajax/rubini29082006@gmail.com", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    subject: formData.get('subject'),
+                    message: formData.get('message'),
+                })
+            });
+
+            if (response.ok) {
+                setFormStatus('Message sent successfully! Thank you.');
+                e.target.reset();
+            } else {
+                setFormStatus('Failed to send message. Please try again or email directly.');
+            }
+        } catch (error) {
+            setFormStatus('Network error. Please email directly at rubini29082006@gmail.com');
+        }
+
+        setTimeout(() => setFormStatus(null), 5000);
     };
 
     return (
