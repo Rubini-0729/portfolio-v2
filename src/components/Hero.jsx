@@ -36,8 +36,8 @@ const Hero = () => {
                             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                             style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', lineHeight: 1.1, marginBottom: '1.5rem' }}
                         >
-                            Building AI & <br />
-                            <span className="gradient-text">Data Solutions</span>
+                            Hi, I'm <br />
+                            <span className="gradient-text">Rubini T</span>
                         </motion.h1>
 
                         <motion.p
