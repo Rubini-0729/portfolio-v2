@@ -1,9 +1,20 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, ExternalLink, Activity, Home, Bot, Cpu } from 'lucide-react';
+import { Github, ExternalLink, Activity, Home, Bot, Cpu, ShieldAlert } from 'lucide-react';
 
 const Projects = () => {
     const projectsList = [
+        {
+            id: 5,
+            title: 'AI-Based Network Intrusion Detection System',
+            role: 'Security & ML',
+            description: 'Developed an intelligent system to detect and classify network intrusions using advanced Machine Learning algorithms.',
+            icon: <ShieldAlert size={32} />,
+            color: '#a855f7',
+            github: 'https://github.com/Rubini-0729/AI-Based-Network-Intrusion-Detection-System.git',
+            demo: null,
+            tags: ['Machine Learning', 'Cybersecurity', 'Python', 'Classification']
+        },
         {
             id: 1,
             title: 'Face Mask Detection',
@@ -50,20 +61,29 @@ const Projects = () => {
         }
     ];
 
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+    };
+
+    const cardVariants = {
+        hidden: { opacity: 0, y: 50, scale: 0.95 },
+        visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100, damping: 15 } }
+    };
+
     return (
         <section id="projects" className="section relative">
             <div className="container relative z-10">
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.5 }}
-                    style={{ marginBottom: '4rem' }}
+                    transition={{ duration: 0.6 }}
+                    style={{ marginBottom: '4rem', textAlign: 'center' }}
                 >
                     <span style={{
-                        display: 'block',
-                        textAlign: 'center',
+                        display: 'inline-block',
                         color: 'var(--secondary)',
                         fontWeight: 600,
                         letterSpacing: '2px',
@@ -78,20 +98,28 @@ const Projects = () => {
                     </h2>
                 </motion.div>
 
-                <div className="projects-grid">
+                <motion.div
+                    className="projects-grid"
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                >
                     {projectsList.map((project, index) => (
                         <motion.div
                             key={project.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            variants={cardVariants}
+                            whileHover={{
+                                y: -12,
+                                boxShadow: `0 20px 40px -10px ${project.color}40`,
+                                borderColor: `${project.color}80`
+                            }}
                             className="glass-panel project-card"
                         >
                             <div
                                 className="project-header"
                                 style={{
-                                    background: `linear-gradient(135deg, rgba(${parseInt(project.color.slice(1, 3), 16)}, ${parseInt(project.color.slice(3, 5), 16)}, ${parseInt(project.color.slice(5, 7), 16)}, 0.2) 0%, transparent 100%)`,
+                                    background: `linear-gradient(135deg, ${project.color}20 0%, transparent 100%)`,
                                     padding: '2rem',
                                     borderBottom: '1px solid var(--border-light)',
                                     display: 'flex',
@@ -99,30 +127,33 @@ const Projects = () => {
                                     alignItems: 'flex-start'
                                 }}
                             >
-                                <div style={{ color: project.color }}>
+                                <motion.div
+                                    whileHover={{ rotate: 10, scale: 1.1 }}
+                                    style={{ color: project.color }}
+                                >
                                     {project.icon}
-                                </div>
+                                </motion.div>
 
                                 <div style={{ display: 'flex', gap: '0.75rem' }}>
                                     {project.github && (
-                                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link" title="Source Code">
+                                        <motion.a whileHover={{ scale: 1.15, backgroundColor: project.color, color: '#fff' }} href={project.github} target="_blank" rel="noopener noreferrer" className="project-link" title="Source Code">
                                             <Github size={20} />
-                                        </a>
+                                        </motion.a>
                                     )}
                                     {project.demo && (
-                                        <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link" title="Live Demo">
+                                        <motion.a whileHover={{ scale: 1.15, backgroundColor: project.color, color: '#fff' }} href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link" title="Live Demo">
                                             <ExternalLink size={20} />
-                                        </a>
+                                        </motion.a>
                                     )}
                                 </div>
                             </div>
 
-                            <div style={{ padding: '2rem' }}>
+                            <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                                 <span style={{ fontSize: '0.85rem', color: project.color, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>
                                     {project.role}
                                 </span>
-                                <h3 style={{ fontSize: '1.5rem', margin: '0.5rem 0 1rem 0' }}>{project.title}</h3>
-                                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                                <h3 style={{ fontSize: '1.4rem', margin: '0.5rem 0 1rem 0' }}>{project.title}</h3>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '1.5rem', flexGrow: 1 }}>
                                     {project.description}
                                 </p>
 
@@ -131,9 +162,9 @@ const Projects = () => {
                                         <span
                                             key={tag}
                                             style={{
-                                                fontSize: '0.8rem',
+                                                fontSize: '0.75rem',
                                                 padding: '0.2rem 0.8rem',
-                                                background: 'rgba(255,255,255,0.05)',
+                                                background: 'rgba(255,255,255,0.03)',
                                                 border: '1px solid rgba(255,255,255,0.1)',
                                                 borderRadius: '999px',
                                                 color: 'var(--text-main)',
@@ -146,7 +177,7 @@ const Projects = () => {
                             </div>
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
 
             </div>
 
@@ -160,12 +191,8 @@ const Projects = () => {
           display: flex;
           flex-direction: column;
           overflow: hidden;
-          transition: all 0.3s ease;
-        }
-        .project-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.4);
-          border-color: rgba(255, 255, 255, 0.15);
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+          height: 100%;
         }
         .project-link {
           color: var(--text-muted);
@@ -177,11 +204,6 @@ const Projects = () => {
           height: 40px;
           border-radius: 50%;
           background: rgba(255, 255, 255, 0.05);
-        }
-        .project-link:hover {
-          color: var(--text-main);
-          background: var(--primary);
-          transform: scale(1.1);
         }
       `}</style>
         </section>
