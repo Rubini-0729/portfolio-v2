@@ -125,7 +125,7 @@ const Hero = () => {
                         >
                             {/* Note: Tell user to name their uploaded image 'profile.jpg' and place it in 'public/' folder */}
                             <img
-                                src="/profile.jpg"
+                                src={`${import.meta.env.BASE_URL}profile.jpg`}
                                 alt="Rubini T"
                                 style={{
                                     width: '100%',
@@ -137,9 +137,9 @@ const Hero = () => {
                                 onError={(e) => {
                                     // Try alternate extensions before giving up
                                     if (e.target.src.endsWith('.jpg')) {
-                                        e.target.src = '/profile.png';
+                                        e.target.src = `${import.meta.env.BASE_URL}profile.png`;
                                     } else if (e.target.src.endsWith('.png')) {
-                                        e.target.src = '/profile.jpeg';
+                                        e.target.src = `${import.meta.env.BASE_URL}profile.jpeg`;
                                     } else {
                                         e.target.style.display = 'none';
                                         e.target.nextSibling.style.display = 'flex';
